@@ -59,12 +59,14 @@ func main() {
 				deprecateArticle(item.Link)
 				if aiFilter(*llm, itemToArticle(*item), source) {
 					fmt.Println("Article passed!\n", item.Link)
+					notification := notificationFromArticle(itemToArticle(*item))
+					sendNotification(notification)
 				}
 			}
 		}
 		{
 			fmt.Println("Alle articles filtered, trying again in a bit...")
-			time.Sleep(time.Second * 10)
+			time.Sleep(time.Second * 60)
 		}
 	}
 }
